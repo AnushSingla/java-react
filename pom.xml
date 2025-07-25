@@ -18,7 +18,7 @@
         <archive>
           <manifest>
             <addClasspath>true</addClasspath>
-            <mainClass>main.java.com.example.Main</mainClass>
+            <mainClass>com.example.Main</mainClass>
           </manifest>
         </archive>
       </configuration>
