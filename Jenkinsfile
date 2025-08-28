@@ -25,9 +25,10 @@ pipeline{
         stage("build and push image"){
             steps{
                 script{
-                    buildDocker "anushsingla/java-react:jma-3.0"
+                    def tag = env.IMAGE_TAG
+                    buildDocker "anushsingla/java-react:${tag}"
                     buildLogin()
-                    buildPush "anushsingla/java-react:jma-3.0"
+                    buildPush "anushsingla/java-react:${tag}"
                 }
             }
         }
