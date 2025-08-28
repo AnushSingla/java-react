@@ -1,2 +1,2 @@
 # java-react
-This is java-react small project type
+This is java-react small project type we built
