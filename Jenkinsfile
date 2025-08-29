@@ -39,6 +39,13 @@ pipeline{
                 }
             }
         }
+        stage("commit version update"){
+            steps{
+                script{
+                    gv.commitv(env.IMAGE_TAG)
+                }
+            }
+        }
     }
 }
 
