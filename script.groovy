@@ -8,13 +8,13 @@ def deployApp(){
 def commitv(String newVersion){
     echo "Committing version changes to git"
     withCredentials([usernamePassword(credentialsId:"github-credentials",usernameVariable:"USER"
-    , passwordVariable:"PASS")]){
+    , passwordVariable:"TOKEN")]){
     
       sh """ git config --global user.email "singlaanush18@gmail.com"
              git config --global user.name "Anush"
       
        """
-       sh "git remote set-url origin https://${USER}:${PASS}@github.com/AnushSingla/java-react.git"
+       sh "git remote set-url origin https://${USER}:${TOKEN}@github.com/AnushSingla/java-react.git"
        sh "git add ."
        sh "git commit -m 'ci: bump version to ${newVersion}'"
        sh "git push origin HEAD:jenkins-build"
