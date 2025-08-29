@@ -7,7 +7,7 @@ def deployApp(){
 
 def commitv(String newVersion){
     echo "Committing version changes to git"
-    withCredentials([usernamePassword(credentialsId:"github-credentials",usernameVariable:"USER"
+    withCredentials([usernamePassword(credentialsId:"ec80911f-ca2d-4c90-aabe-a4aa00586d02",usernameVariable:"USER"
     , passwordVariable:"TOKEN")]){
 
     def encodedToken = URLEncoder.encode(TOKEN, "UTF-8")
