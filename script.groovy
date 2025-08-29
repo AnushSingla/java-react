@@ -16,7 +16,10 @@ def commitv(String newVersion){
         sh "git remote set-url origin https://${USER}:${encodedToken}@github.com/AnushSingla/java-react.git"
         sh "git add ."
         sh "git commit -m 'ci: bump version to ${newVersion} [ci skip]' || echo 'No changes to commit'"
+        sh "git fetch origin jenkins-build"
+        sh "git rebase origin/jenkins-build || true"
         sh "git push origin HEAD:jenkins-build"
+
     }
 }
 
