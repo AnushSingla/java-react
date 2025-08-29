@@ -8,7 +8,7 @@
   <!-- 🔹 Your project coordinates -->
   <groupId>com.example</groupId>
   <artifactId>MyJavaApp</artifactId>
-  <version>1.0.0-SNAPSHOT</version> <!-- use 1.0.0-SNAPSHOT if pushing to snapshot repo -->
+  <version>1.0.1</version> <!-- use 1.0.0-SNAPSHOT if pushing to snapshot repo -->
   <packaging>jar</packaging>
   <name>MyJavaApp</name>
   <description>A project that publishes to Nexus</description>
