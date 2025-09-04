@@ -1,8 +1,17 @@
 import java.net.URLEncoder
 
 def deployApp() {
-    echo "Deploying App"
+    def imageTag = env.IMAGE_TAG ?: "latest"
+
+    sshagent(['aws-jenkins']) {
+        sh """
+            ssh -o StrictHostKeyChecking=no ec2-user@<EC2-PUBLIC-IP> '
+                IMAGE_TAG=${imageTag} bash ~/server-cmds.sh
+            '
+        """
+    }
 }
+
 
 def commitv(String newVersion) {
     echo "Committing version changes to git"
