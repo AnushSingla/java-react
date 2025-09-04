@@ -1,14 +1,17 @@
+@Library("jenkins-shared-lib") _
+def gv = load "script.groovy"
+
 pipeline {
     agent any
     tools {
         maven 'maven-app'
     }
+
     stages {
         stage("buildjar") {
             steps {
                 script {
-                    // Call buildJar() from the loaded Groovy library
-                    gv.buildJar()  // sets env.IMAGE_TAG automatically
+                    gv.buildJar()  // gv must be loaded before this
                 }
             }
         }
@@ -27,7 +30,7 @@ pipeline {
         stage("deploy") {
             steps {
                 script {
-                    gv.deployApp() // deployApp() uses IMAGE_TAG internally
+                    gv.deployApp()  // uses IMAGE_TAG internally
                 }
             }
         }
