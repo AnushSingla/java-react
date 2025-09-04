@@ -17,30 +17,28 @@ def deployApp() {
 
 
 def commitv() {
-    // Get current version from Maven
     def currentVersion = sh(script: "mvn help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true).trim()
     echo "Current Version: ${currentVersion}"
 
-    // Auto-increment patch number (1.0.7 -> 1.0.8)
     def parts = currentVersion.tokenize('.')
     parts[2] = (parts[2].toInteger() + 1).toString()
     def newVersion = parts.join('.')
     echo "Bumping to: ${newVersion}"
 
-    // Set new version in pom.xml
     sh "mvn versions:set -DnewVersion=${newVersion}"
     sh "mvn versions:commit"
 
-    // Commit and push to git
+    // Force git add & commit the pom.xml
     withCredentials([usernamePassword(credentialsId: "ec80911f-ca2d-4c90-aabe-a4aa00586d02", usernameVariable: "USER", passwordVariable: "TOKEN")]) {
         def encodedToken = URLEncoder.encode(TOKEN, "UTF-8")
         sh """
             git config --global user.email "singlaanush18@gmail.com"
             git config --global user.name "Anush"
             git remote set-url origin https://${USER}:${encodedToken}@github.com/AnushSingla/java-react.git
+            git checkout main
             git add pom.xml
-            git commit -m 'ci: bump version to ${newVersion} [ci skip]' || echo 'No changes to commit'
-            git push origin HEAD:main
+            git commit -m 'ci: bump version to ${newVersion}' || echo 'No changes to commit'
+            git push origin main
         """
     }
 
