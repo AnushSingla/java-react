@@ -1,13 +1,11 @@
 #!/bin/bash
+cd ~/java-react
 
-# Make sure IMAGE_TAG is exported so docker-compose can use it
-export IMAGE_TAG=${IMAGE_TAG:-latest}
+# Stop old container if running
+docker rm -f java-react || true
 
-# Stop the old containers
-docker-compose down
+# Pull the new image (IMAGE_TAG is passed by Jenkins)
+docker pull anushsingla/java-react:$IMAGE_TAG
 
-# Pull the new image (optional, docker-compose up -d will also pull if not present)
-docker-compose pull
-
-# Start the containers with the new image
-docker-compose up -d
+# Start container with docker-compose
+IMAGE_TAG=$IMAGE_TAG docker-compose up -d
