@@ -1,44 +1,54 @@
+#!/usr/bin/env groovy
 @Library("jenkins-shared-lib") _
-def gv = load "script.groovy"
 
 pipeline {
     agent any
+
     tools {
         maven 'maven-app'
     }
 
     stages {
-        stage("buildjar") {
+        stage("Init") {
             steps {
                 script {
-                    gv.buildJar()  // gv must be loaded before this
+                    // Only deployApp() and commitv() are in script.groovy
+                    gv = load "script.groovy"
                 }
             }
         }
 
-        stage("build and push image") {
+        stage("Build JAR") {
+            steps {
+                script {
+                    buildJar()  // from shared library
+                }
+            }
+        }
+
+        stage("Build and Push Docker Image") {
             steps {
                 script {
                     def tag = env.IMAGE_TAG
-                    gv.buildDocker("anushsingla/java-react:${tag}")
-                    gv.buildLogin()
-                    gv.buildPush("anushsingla/java-react:${tag}")
+                    buildDocker("anushsingla/java-react:${tag}")
+                    buildLogin()
+                    buildPush("anushsingla/java-react:${tag}")
                 }
             }
         }
 
-        stage("deploy") {
+        stage("Deploy") {
             steps {
                 script {
-                    gv.deployApp()  // uses IMAGE_TAG internally
+                    gv.deployApp()  // from script.groovy
                 }
             }
         }
 
-        stage("commit version update") {
+        stage("Commit Version Update") {
             steps {
                 script {
-                    gv.commitv(env.IMAGE_TAG)
+                    gv.commitv(env.IMAGE_TAG)  // from script.groovy
                 }
             }
         }
