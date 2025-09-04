@@ -48,7 +48,7 @@ pipeline {
         stage("Commit Version Update") {
             steps {
                 script {
-                    gv.commitv(env.IMAGE_TAG)  // from script.groovy
+                      env.IMAGE_TAG = gv.commitv()  
                 }
             }
         }
