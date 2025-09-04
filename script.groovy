@@ -5,7 +5,7 @@ def deployApp() {
 
     sshagent(['aws-jenkins']) {
         sh """
-            ssh -o StrictHostKeyChecking=no ec2-user@<EC2-PUBLIC-IP> '
+            ssh -o StrictHostKeyChecking=no ec2-user@43.205.194.102 '
                 cd ~/java-react
                 IMAGE_TAG=${imageTag} bash server-cmds.sh
             '
