@@ -12,7 +12,7 @@ pipeline {
         stage("Init") {
             steps {
                 script {
-                    // Only deployApp() and commitv() are in script.groovy
+                    
                     gv = load "script.groovy"
                 }
             }
@@ -21,7 +21,7 @@ pipeline {
         stage("Build JAR") {
             steps {
                 script {
-                    buildJar()  // from shared library
+                    buildJar()  
                 }
             }
         }
@@ -40,7 +40,7 @@ pipeline {
         stage("Deploy") {
             steps {
                 script {
-                    gv.deployApp()  // from script.groovy
+                    gv.deployApp()  
                 }
             }
         }
