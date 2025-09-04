@@ -1,7 +1,8 @@
 import java.net.URLEncoder
 
 def deployApp() {
-    def imageTag = env.VERSION ?: "latest"
+    // Use IMAGE_TAG set by buildJar() instead of default "latest"
+    def imageTag = env.IMAGE_TAG ?: "latest"
 
     sshagent(['aws-jenkins']) {
         sh """
@@ -12,6 +13,7 @@ def deployApp() {
         """
     }
 }
+
 
 def commitv(String newVersion) {
     echo "📦 Committing version bump to git: ${newVersion}"
