@@ -1,8 +1,6 @@
-version: '3.8'
-
 services:
   java-react:
-    image: anushsingla/java-react:${IMAGE_TAG:-latest}
+    image: anushsingla/java-react:${IMAGE_TAG}
     container_name: java-react
     ports:
       - "8080:8080"

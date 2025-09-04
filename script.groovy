@@ -1,7 +1,7 @@
 import java.net.URLEncoder
 
 def deployApp() {
-    def imageTag = env.IMAGE_TAG ?: "latest"
+    def imageTag = env.VERSION ?: "latest"
 
     sshagent(['aws-jenkins']) {
         sh """
