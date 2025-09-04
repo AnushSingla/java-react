@@ -1,10 +1,13 @@
-#!/usr/bin/env bash
 #!/bin/bash
 
-echo "Pulling image: anushsingla/java-react:$IMAGE_TAG"
-docker pull anushsingla/java-react:$IMAGE_TAG
+# Make sure IMAGE_TAG is exported so docker-compose can use it
+export IMAGE_TAG=${IMAGE_TAG:-latest}
 
-echo "Restarting app with new image..."
-IMAGE_TAG=$IMAGE_TAG docker-compose up -d
+# Stop the old containers
+docker-compose down
 
-echo "✅ Deployment done"
+# Pull the new image (optional, docker-compose up -d will also pull if not present)
+docker-compose pull
+
+# Start the containers with the new image
+docker-compose up -d
