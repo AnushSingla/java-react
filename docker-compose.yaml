@@ -1,12 +1,16 @@
-version: '3.8'
 services:
-      java-react:
-        image: anushsingla/java-react:${IMAGE_TAG:-latest}
-        ports:
-          -"8080:8080"
-      postgres:
-        image:
-        ports:
-         -"5432:5432"
-        environment:
-          POSTGRES_PASSWORD = Suhan@24510
+  java-react:
+    image: anushsingla/java-react:${IMAGE_TAG}
+    container_name: java-react
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:latest
+    container_name: java-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: Suhan@24510
+    restart: unless-stopped

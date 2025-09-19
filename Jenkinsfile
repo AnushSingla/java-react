@@ -1,52 +1,56 @@
-#!/user/bin/env groovy
-@Library("jenkins-shared-lib")
-def gv 
-pipeline{
+#!/usr/bin/env groovy
+@Library("jenkins-shared-lib") _
+
+pipeline {
     agent any
-    tools{
+
+    tools {
         maven 'maven-app'
     }
-    stages{
-        stage("init"){
-            steps{
-                script{
-            gv = load "script.groovy"
-         }
-            }
-         
-        }
-        stage("buildjar"){
-            steps{
-                script{
-                    buildJar()
+
+    stages {
+        stage("Init") {
+            steps {
+                script {
+                    
+                    gv = load "script.groovy"
                 }
             }
         }
-        stage("build and push image"){
-            steps{
-                script{
+
+        stage("Build JAR") {
+            steps {
+                script {
+                    buildJar()  
+                }
+            }
+        }
+
+        stage("Build and Push Docker Image") {
+            steps {
+                script {
                     def tag = env.IMAGE_TAG
-                    buildDocker "anushsingla/java-react:${tag}"
+                    buildDocker("anushsingla/java-react:${tag}")
                     buildLogin()
-                    buildPush "anushsingla/java-react:${tag}"
+                    buildPush("anushsingla/java-react:${tag}")
                 }
             }
         }
-        stage("deploy"){
-            steps{
-                script{
-                    gv.deployApp()
+
+        stage("Deploy") {
+            steps {
+                script {
+                    gv.deployApp()  
                 }
             }
         }
-        stage("commit version update"){
-            steps{
-                script{
-                    gv.commitv(env.IMAGE_TAG)
+
+        stage("Commit Version Update") {
+            steps {
+                script {
+                    gv.commitv(env.IMAGE_TAG)  // from script.groovy
                 }
             }
         }
     }
 }
-
-  
